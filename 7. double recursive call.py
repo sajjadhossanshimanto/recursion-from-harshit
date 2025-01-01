@@ -6,6 +6,8 @@ def fibo(n):
 
     return fibo(n-1) + fibo(n-2)
 
+# for single call visualise with `stack`
+# for multiple calls diagram appears tobe `tree`
 
 print(fibo(0))
 print(fibo(1))

@@ -4,6 +4,8 @@ def begger(a: int, b: int) -> int:
     return a if a>b else b
 
 def get_max(array, idx=0):
+    if not array: return None
+    
     if idx==len(array)-1:
         return array[idx]
 

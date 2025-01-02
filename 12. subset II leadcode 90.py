@@ -14,17 +14,25 @@ def subsets1(l, index=0, temp = []):
 # include - non include
 all_sub = []
 def subsets2(l, index=0, path=[]):
-    if index == len(l):
+    if index >= len(l):
         all_sub.append(path[:])
         return 
-
-    # not include
-    subsets(l, index+1, path)
     
     # include
-    path.append(l[i])
+    path.append(l[index])
     subsets2(l, index+1, path)
     path.pop()
 
-subsets1(['a', 'b', 'b', 'c'])
+    # not include
+    # while i is indexible and  `cur char` == `next char`
+    while index<len(l)-1 and l[index]==l[index+1]:
+        # if 
+        #     break
+        index+=1
+    
+    if index<len(l):
+        subsets2(l, index+1, path)
+        
+
+subsets2(['a', 'b', 'b', 'c'])
 print(all_sub)

@@ -3,6 +3,8 @@
 # include index i or not include it
 # for multiple choices diagram will form a tree
 
+# this is called pick and not pick method
+
 
 sub = []
 def subsets(l, index=0, path=[]):

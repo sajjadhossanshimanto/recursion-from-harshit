@@ -14,9 +14,14 @@ def subsets1(l, index=0, temp = []):
 # include - non include
 all_sub = []
 def subsets2(l, index=0, path=[]):
+    if index == len(l):
+        all_sub.append(path[:])
+        return 
+
     # not include
     subsets(l, index+1, path)
     
+    # include
     path.append(l[i])
     subsets2(l, index+1, path)
     path.pop()

@@ -3,6 +3,8 @@
 # include - non include
 all_sub = []
 def subsets2(l, index=0, path=[]):
+    '''sorting is must before passing to the function'''
+
     if index >= len(l):
         all_sub.append(path[:])
         return 
@@ -23,5 +25,7 @@ def subsets2(l, index=0, path=[]):
         subsets2(l, index+1, path)
         
 
-subsets2(['a', 'b', 'b', 'c'])
+l = ['a', 'b', 'b', 'c']
+s.sort()
+subsets2(l)
 print(all_sub)

@@ -3,6 +3,8 @@
 # with for loop
 all_sub = []
 def subsets(l, index=0, temp = []):
+    '''sorting is must before passing to the function'''
+    
     all_sub.append(temp[:])
     
     prev = None
@@ -16,5 +18,7 @@ def subsets(l, index=0, temp = []):
 
 
 
-subsets(['a', 'b', 'b', 'c'])
+l = ['a', 'b', 'b', 'c']
+s.sort()
+subsets(l)
 print(all_sub)

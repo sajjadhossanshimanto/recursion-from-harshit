@@ -3,6 +3,16 @@
 - for generating sub-set we will use backtrack
 '''
 #%%
+def is_palindrom(s, l, r):
+    ''' both end points are inclusive '''
+    # if l==r: return True
+    while l<=r:
+        if s[l]!=s[r]: return False
+        l+=1
+        r-=1
+    
+    return True
+
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         res=[]

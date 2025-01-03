@@ -24,7 +24,11 @@ class Solution:
 
             return False
 
-        return dfs(0, 0)
+        for x in range(len(board)):
+            for y in range(len(board[0])):
+                if dfs(x, y): return True
+        
+        return False
 
 
 

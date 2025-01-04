@@ -14,7 +14,9 @@ class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         row, column = len(board), len(board[0])
 
-        def dfs(x=0, y=0, index=0, visit=[[0]*len(board[0]) for _ in range(len(board))]):
+        # note: same as declearing it as paramiter. as it only decleared once
+        visit=[[0]*len(board[0]) for _ in range(len(board))]
+        def dfs(x=0, y=0, index=0):
             if index==len(word): 
                 return True
 
@@ -24,7 +26,7 @@ class Solution:
 
             for i, j in moves:
                 cx, cy = x+i, y+j
-                if dfs(cx, cy, index+1, visit): 
+                if dfs(cx, cy, index+1): 
                     return True
             visit[x][y] = 0
 
@@ -51,3 +53,4 @@ s.exist([["a"]], "a")
 s.exist([["a","b"]], "ba")
 # %%
 s.exist([["a","a"]], "aaa")
+# %%

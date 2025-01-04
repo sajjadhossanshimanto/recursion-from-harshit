@@ -25,25 +25,19 @@ class Solution:
                     if board[i][j] == ele: return False
             
             return True
-        
-        def next_pos(x, y):
-            if y<column: return x, y+1
-            if x<row: return x+1, 0
-            # else end of cell
 
         def backtrack(x=0, y=0):# starting x, y
-            if x==row and y==column: return True
+            if y>8: return backtrack(x+1, 0)
+            if x==9: return True
             
-            for i in range(x, row):
-                for j in range(y, column):# code doesn't cover all cells
-                    if board[i][j]!=".": continue
+            if board[x][y]!=".": return backtrack(x, y+1)
 
-                    for num in range(1, 9+1):
-                        if not is_valid(i, j, str(num)): continue
-                        
-                        board[i][j] = str(num)
-                        if backtrack(*next_pos(i, j)): return True
-                        board[i][j] = "."
+            for num in range(1, 9+1):
+                if not is_valid(x, y, str(num)): continue
+                
+                board[x][y] = str(num)
+                if backtrack(x, y+1): return True
+                board[x][y] = "."
 
         backtrack()
 

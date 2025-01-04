@@ -38,3 +38,4 @@ s = Solution()
 # ["((()))","(()())","(())()","()(())","()()()"]
 s.generateParenthesis(3)
 # %%
+s.generateParenthesis(4)

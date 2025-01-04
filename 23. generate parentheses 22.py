@@ -10,9 +10,7 @@ class Solution:
         res = []
         def backtrack(open_counter=0, closed_counter=0, path=[]):
             if open_counter==closed_counter==n:
-                t = "".join(path)
-                if not res or res[-1]!=t:
-                    res.append(t)
+                res.append("".join(path))
                 return
             # if open_counter>n or closed_counter>n: return
             

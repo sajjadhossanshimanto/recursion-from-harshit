@@ -14,7 +14,7 @@ class Solution:
                 return
             if len(path)>4: return
 
-            for end in range(start+1, start+4):
+            for end in range(start+1, min(start+4, len(s)+1)):
                 path.append(s[start: end])
                 if 0<=int(path[-1])<=255:
                     # and path[-1][0]!="0"# TODO: check for leading zeros

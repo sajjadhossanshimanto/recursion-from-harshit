@@ -8,7 +8,7 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         
         res = []
-        def backtrack(open_counter=0, closed_counter=0, opend: bool=False, path=[]):
+        def backtrack(open_counter=0, closed_counter=0, path=[]):
             if open_counter==closed_counter==n:
                 res.append("".join(path))
                 return
@@ -16,14 +16,14 @@ class Solution:
             
             if open_counter<n:
                 path.append("(")
-                backtrack(open_counter+1, closed_counter, True, path)
+                backtrack(open_counter+1, closed_counter, path)
                 path.pop()
             if open_counter>closed_counter:
                 c=0
                 for _ in range(open_counter-closed_counter):
                     path.append(")")
                     c+=1
-                    backtrack(open_counter, closed_counter+c, False, path)
+                    backtrack(open_counter, closed_counter+c, path)
                 for _ in range(c):
                     path.pop()
             

@@ -12,31 +12,29 @@ moves = [
 ]
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        def dfs(x=0, y=0, pos=0, visit=[[0]*len(board[0]) for _ in range(len(board))]):
-            if board[x][y]!=word[pos]:
-                return False
-            pos+=1
+        row, column = len(board), len(board[0])
 
-            if pos>=len(word): 
+        def dfs(x=0, y=0, index=0, visit=[[0]*len(board[0]) for _ in range(len(board))]):
+            if index==len(word): 
                 return True
+
+            if x<0 or y<0 or x>=row or y>=column or visit[x][y] or board[x][y]!=word[index]:
+                return False
+            visit[x][y] = 1
 
             for i, j in moves:
                 cx, cy = x+i, y+j
-                if cx<0 or cy<0 or cx>=len(board) or cy>=len(board[0]) or visit[cx][cy]: continue
-                visit[cx][cy] = 1
-
-                if dfs(cx, cy, pos, visit): 
+                if dfs(cx, cy, index+1, visit): 
                     return True
-                visit[cx][cy] = 0
+            visit[x][y] = 0
 
-            return False
-
-        for x in range(len(board)):
-            for y in range(len(board[0])):
-                if dfs(x, y): 
+        for x in range(row):
+            for y in range(column):
+                if dfs(x, y, 0):
                     return True
         
         return False
+
 
 
 

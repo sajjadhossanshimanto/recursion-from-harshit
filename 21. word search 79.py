@@ -15,20 +15,22 @@ class Solution:
         row, column = len(board), len(board[0])
 
         # note: same as declearing it as paramiter. as it only decleared once
-        visit=[[0]*len(board[0]) for _ in range(len(board))]
         def dfs(x=0, y=0, index=0):
             if index==len(word): 
                 return True
 
-            if x<0 or y<0 or x>=row or y>=column or visit[x][y] or board[x][y]!=word[index]:
+            if x<0 or y<0 or x>=row or y>=column or board[x][y]=="*" or board[x][y]!=word[index]:
                 return False
-            visit[x][y] = 1
+            temp = board[x][y]
+            board[x][y] = "*"# note: tricks to avoid visit matix to have better space complexity
 
             for i, j in moves:
                 cx, cy = x+i, y+j
                 if dfs(cx, cy, index+1): 
                     return True
-            visit[x][y] = 0
+            
+            board[x][y] = temp
+
 
         for x in range(row):
             for y in range(column):

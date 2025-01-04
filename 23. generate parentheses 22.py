@@ -21,14 +21,9 @@ class Solution:
                 backtrack(open_counter+1, closed_counter, path)
                 path.pop()
             if open_counter>closed_counter:
-                c=0
-                for _ in range(open_counter-closed_counter):
-                    path.append(")")
-                    c+=1
-                    backtrack(open_counter, closed_counter+c, path)
-                for _ in range(c):
-                    path.pop()
-            
+                path.append(")")
+                backtrack(open_counter, closed_counter+1, path)
+                path.pop()
 
         backtrack()
         return res
@@ -38,4 +33,7 @@ s = Solution()
 # ["((()))","(()())","(())()","()(())","()()()"]
 s.generateParenthesis(3)
 # %%
+# ["(((())))","((()()))","((())())","((()))()","(()(()))","(()()())","(()())()","(())(())","(())()()","()((()))","()(()())","()(())()","()()(())","()()()()"]
 s.generateParenthesis(4)
+
+# %%

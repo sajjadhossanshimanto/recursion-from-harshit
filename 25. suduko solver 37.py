@@ -56,3 +56,69 @@ s.solveSudoku(board)
 t2 = time()
 # print(board)
 print(t2-t1)
+# %%
+board
+
+# %%
+from typing import List
+
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        # Define helper functions
+        def get_box_index(row, col):
+            return (row // 3) * 3 + (col // 3)
+
+        def is_valid(num, row, col):
+            box = get_box_index(row, col)
+            return num not in row_sets[row] and num not in col_sets[col] and num not in box_sets[box]
+
+        def place_number(num, row, col):
+            board[row][col] = num
+            row_sets[row].add(num)
+            col_sets[col].add(num)
+            box_sets[get_box_index(row, col)].add(num)
+
+        def remove_number(num, row, col):
+            board[row][col] = "."
+            row_sets[row].remove(num)
+            col_sets[col].remove(num)
+            box_sets[get_box_index(row, col)].remove(num)
+
+        def backtrack(index=0):
+            if index == len(empty_cells):
+                return True
+            
+            row, col = empty_cells[index]
+            for num in map(str, range(1, 10)):
+                if is_valid(num, row, col):
+                    place_number(num, row, col)
+                    if backtrack(index + 1):
+                        return True
+                    remove_number(num, row, col)
+            return False
+
+        # Initialize sets for rows, columns, and boxes
+        row_sets = [set() for _ in range(9)]
+        col_sets = [set() for _ in range(9)]
+        box_sets = [set() for _ in range(9)]
+
+        # Pre-fill the sets with existing numbers on the board
+        empty_cells = []
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == ".":
+                    empty_cells.append((r, c))
+                else:
+                    num = board[r][c]
+                    row_sets[r].add(num)
+                    col_sets[c].add(num)
+                    box_sets[get_box_index(r, c)].add(num)
+
+        # Start backtracking
+        backtrack()
+
+s = Solution()
+# %%

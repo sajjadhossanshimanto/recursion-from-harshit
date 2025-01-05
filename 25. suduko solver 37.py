@@ -207,60 +207,84 @@ class Solution:# 1.32 sec
 s = Solution()
 
 # %%
-class Solution:# 0.012 sec
+from typing import List
+
+class Solution:
     def solveSudoku(self, board: List[List[str]]) -> None:
         """
-        Do not return anything, modify board in-place instead.
+        Solves the Sudoku puzzle by modifying the board in-place.
         """
-        unsolved = []
-        row = [set() for _ in range(9)]
-        col = [set() for _ in range(9)]
-        square = [set() for _ in range(9)]
-        
-        for i in range(9):
-            for j in range(9):
-                if board[i][j] == ".": 
-                    unsolved.append((i, j))
-                else: 
-                    row[i].add(board[i][j])
-                    col[j].add(board[i][j])
-                    square[i//3*3+j//3].add(board[i][j])
-                    
-        def backtrack(index):
-            if index == len(unsolved): 
-                return True
-            
-            min_candidate = 10
-            min_index = index
-            for x in range(index, len(unsolved)):
-                i, j = unsolved[x]
-                box_index = (i // 3) * 3 + (j // 3)
-                possible = {'1','2','3','4','5','6','7','8','9'} - row[i] - col[j] - square[box_index]
-                candidates = len(possible)
-                if candidates < min_candidate:
-                    min_candidate = candidates
-                    min_index = x
-                if min_candidate == 1:
-                    break 
-            
-            unsolved[index], unsolved[min_index] = unsolved[min_index], unsolved[index]
-            i, j = unsolved[index]
-            box_index = (i // 3) * 3 + (j // 3)
-            possible_numbers = {'1','2','3','4','5','6','7','8','9'} - row[i] - col[j] - square[box_index]
+        # Track sets of numbers used in each row, column, and 3x3 box
+        rows = [set() for _ in range(9)]
+        cols = [set() for _ in range(9)]
+        boxes = [set() for _ in range(9)]
+        empty_cells = []
 
-            for num in possible_numbers:
-                board[i][j] = num
-                row[i].add(num)
-                col[j].add(num)
-                square[i//3*3+j//3].add(num)
-                if backtrack(index+1): 
+        # Initialize tracking sets and identify empty cells
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == ".":
+                    empty_cells.append((r, c))
+                else:
+                    num = board[r][c]
+                    rows[r].add(num)
+                    cols[c].add(num)
+                    boxes[(r // 3) * 3 + (c // 3)].add(num)
+
+        def get_candidates(r: int, c: int) -> set:
+            """
+            Returns the valid candidates for a given cell.
+            """
+            box_index = (r // 3) * 3 + (c // 3)
+            all_numbers = {'1', '2', '3', '4', '5', '6', '7', '8', '9'}
+            return all_numbers - rows[r] - cols[c] - boxes[box_index]
+
+        def backtrack(index: int) -> bool:
+            """
+            Backtracking function to solve the Sudoku puzzle.
+            """
+            if index == len(empty_cells):
+                return True  # All cells are filled successfully
+
+            # Find the next cell with the fewest candidates
+            min_candidates = float('inf')
+            min_index = index
+
+            for i in range(index, len(empty_cells)):
+                r, c = empty_cells[i]
+                num_candidates = len(get_candidates(r, c))
+                if num_candidates < min_candidates:
+                    min_candidates = num_candidates
+                    min_index = i
+                if min_candidates == 1:  # Optimal case: only one candidate
+                    break
+
+            # Swap the cell with the fewest candidates to the current position
+            empty_cells[index], empty_cells[min_index] = empty_cells[min_index], empty_cells[index]
+            r, c = empty_cells[index]
+            box_index = (r // 3) * 3 + (c // 3)
+
+            # Try each candidate for the current cell
+            for num in get_candidates(r, c):
+                # Place the number
+                board[r][c] = num
+                rows[r].add(num)
+                cols[c].add(num)
+                boxes[box_index].add(num)
+
+                # Recurse to the next cell
+                if backtrack(index + 1):
                     return True
-                row[i].remove(num)
-                col[j].remove(num)
-                square[i//3*3+j//3].remove(num)
-                board[i][j] = '.'
-            return False 
-        
+
+                # Undo the placement
+                board[r][c] = "."
+                rows[r].remove(num)
+                cols[c].remove(num)
+                boxes[box_index].remove(num)
+
+            return False  # No valid solution found for this path
+
+        # Start solving from the first empty cell
         backtrack(0)
 
 s = Solution()

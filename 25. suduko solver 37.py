@@ -38,17 +38,10 @@ class Solution:
                 board[x][y] = str(num)
                 if backtrack(x, y+1): return True
                 board[x][y] = "."
-
-        # TESTING is_valid function
-        # for i in range(3, 6):
-        #     for j in range(3, 6):
-        #         if board[i][j]!=".": continue
-        #         print(i, j, " -> ", end="")
-        #         backtrack(i, j)
-        #         print()
+            
+            return False
 
         backtrack()
-
 
 s = Solution()
 # %%

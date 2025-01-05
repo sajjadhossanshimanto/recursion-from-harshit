@@ -19,9 +19,9 @@ class Solution:
             for j in range(column):
                 if board[x][j]==ele: return False
             
-            cell = (x//3)*3
-            for i in range(cell, cell+3):
-                for j in range(cell, cell+3):
+            start_row, start_col = (x // 3) * 3, (y // 3) * 3
+            for i in range(start_row, start_row+3):
+                for j in range(start_col, start_col+3):
                     if board[i][j] == ele: return False
             
             return True

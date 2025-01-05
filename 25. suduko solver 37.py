@@ -63,6 +63,7 @@ board
 from typing import List
 
 class Solution:# 5 secound for hard test
+    # optimisation: pre-generated empty cell
     def solveSudoku(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
@@ -125,6 +126,8 @@ s = Solution()
 from typing import List
 
 class Solution:# 1.32 sec
+    # optimisation: 1. pre-generated cell_candidates list
+    # solve in accordance 2. sorted cell_candidate
     def solveSudoku(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
@@ -210,6 +213,8 @@ s = Solution()
 from typing import List
 
 class Solution:
+    # have all the previous optimisation with
+    # Dynamic Ordering of Cells 
     def solveSudoku(self, board: List[List[str]]) -> None:
         """
         Solves the Sudoku puzzle by modifying the board in-place.
